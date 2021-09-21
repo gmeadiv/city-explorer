@@ -26,16 +26,12 @@ class App extends React.Component {
       const latitude = response.data[0].lat;
       const longitude = response.data[0].lon;
 
-      console.log(latitude, longitude, 'CONSOLE LOG')
-
       this.setState({
         location, // or location:location
         latitude,
         longitude,
         error: false,
       });
-
-      // this.showMap();
 
     } catch (error) {
 
