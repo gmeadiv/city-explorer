@@ -3,7 +3,9 @@ import React from 'react';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+
+const SERVER = 'http://localhost:3001/forecast'; 
 
 class App extends React.Component {
   constructor(props) {
@@ -20,10 +22,13 @@ class App extends React.Component {
   }
 
   getLocation = async () => {
-    const locationURL = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
+    // const locationURL = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
+
+    const locationURL = SERVER;
 
     try {
       const response = await axios.get(locationURL);
+      console.log(response.data, '<---- CONSOLE LOG ---<<<');
       const location = response.data[0].display_name;
       const latitude = response.data[0].lat;
       const longitude = response.data[0].lon;
