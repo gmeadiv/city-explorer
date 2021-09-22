@@ -13,6 +13,8 @@ class App extends React.Component {
       location: '',
       latitude: '',
       longitude: '',
+      forcastDescr: [],
+      forcastDate: [],
       error: false,
     }
   }
@@ -25,11 +27,15 @@ class App extends React.Component {
       const location = response.data[0].display_name;
       const latitude = response.data[0].lat;
       const longitude = response.data[0].lon;
+      const forcastDescr = response.data[0].lon;
+      const forcastDate = response.data[0].lon;
 
       this.setState({
         location, // or location:location
         latitude,
         longitude,
+        forcastDescr,
+        forcastDate,
         error: false,
       });
 
@@ -60,6 +66,12 @@ class App extends React.Component {
           </ul>
           <h3>Map:</h3>
           <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded />
+          <h3>Three Day Weather Forcast for {this.state.location.display_name}</h3>
+          <ul>
+          <li>{this.state.forcastDate[0]}: {this.state.forcastDescr[0]}</li>
+          <li>{this.state.forcastDate[1]}: {this.state.forcastDescr[1]}</li>
+          <li>{this.state.forcastDate[2]}: {this.state.forcastDescr[2]}</li>
+          </ul>
           </>
         }
 
