@@ -17,7 +17,7 @@
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
 
 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
-### Sep. 20th 5:30pm
+### Sep. 20th 2021
 - Features added: 
   1. Set up react repo and api keys
   2. Rendered locations, lat, long
@@ -29,3 +29,5 @@
 - Actual time needed to complete: 5 hours
 
 ## Credit and Collaborations
+
+-- Hexx
