@@ -49,21 +49,24 @@ class App extends React.Component {
   getThreeDayForecast = async (latitude, longitude) => {
     try {
       const API = 'http://localhost:3001';
-      const threeDayForecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
+      const forecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
-      // console.log(threeDayForecast.data, '<---- THREE DAY FORECAST LOG ---<<<');
+      // console.log(forecast, '<---- THREE DAY FORECAST LOG ---<<<')
 
       this.setState({
-        forecast: threeDayForecast.data,
+        forecast,
       });
+
+      // console.log(this.state.forecast, '<---- SET STATE FORECAST LOG ---<<<')
 
     } catch(error) {
       console.log(error, '<---- ERROR LOG ---<<<');
     }
-    // console.log(this.state.forecast, '<---- THIS DOT STATE FORECAST LOG ---<<<');
   }
 
-  changeHandler = (event) => this.setState({ searchQuery: event.target.value });
+  changeHandler = (event) => {
+   this.setState({searchQuery: event.target.value});
+  }
 
   render() {
     // console.log(this.state, '<---- THIS DOT STATE RENDER LOG ---<<<');
