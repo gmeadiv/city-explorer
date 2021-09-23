@@ -15,7 +15,7 @@ class App extends React.Component {
       location: '',
       latitude: '',
       longitude: '',
-      forecast: '',
+      forecast: [],
       error: false,
     }
   }
@@ -51,13 +51,11 @@ class App extends React.Component {
       const API = 'http://localhost:3001';
       const threeDayForecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
-      console.log(threeDayForecast.data, '<---- THREE DAY FORECAST LOG ---<<<');
+      // console.log(threeDayForecast.data, '<---- THREE DAY FORECAST LOG ---<<<');
 
       this.setState({
         forecast: threeDayForecast.data,
       });
-
-      console.log(this.state.forecast, '<---- THIS DOT STATE FORECAST LOG ---<<<');
 
     } catch(error) {
       console.log(error, '<---- ERROR LOG ---<<<');
@@ -65,11 +63,10 @@ class App extends React.Component {
     // console.log(this.state.forecast, '<---- THIS DOT STATE FORECAST LOG ---<<<');
   }
 
-
   changeHandler = (event) => this.setState({ searchQuery: event.target.value });
 
   render() {
-    console.log(this.state, '<---- THIS DOT STATE RENDER LOG ---<<<');
+    // console.log(this.state, '<---- THIS DOT STATE RENDER LOG ---<<<');
     return (
       <>
         <input onChange={this.changeHandler} placeholder="search for a city"></input>
