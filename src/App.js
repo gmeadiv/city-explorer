@@ -1,9 +1,11 @@
-
 import React from 'react';
 import axios from 'axios';
+
+import Weather from './weather.js';
+
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,8 +15,7 @@ class App extends React.Component {
       location: '',
       latitude: '',
       longitude: '',
-      forcastDescr: [],
-      forcastDate: [],
+      forecast: '',
       error: false,
     }
   }
@@ -27,32 +28,51 @@ class App extends React.Component {
       const location = response.data[0].display_name;
       const latitude = response.data[0].lat;
       const longitude = response.data[0].lon;
-      const forcastDescr = response.data[0].lon;
-      const forcastDate = response.data[0].lon;
 
       this.setState({
         location, // or location:location
         latitude,
         longitude,
-        forcastDescr,
-        forcastDate,
         error: false,
       });
 
-    } catch (error) {
+      } catch (error) {
 
       console.error('Unable to find city', 
       this.state.searchQuery);
 
       this.setState({ error: true });
     }
+    this.getThreeDayForecast(this.latitude, this.longitude);
+  };
+
+  getThreeDayForecast = async (latitude, longitude) => {
+    try {
+      const API = 'http://localhost:3001';
+      const threeDayForecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
+
+      console.log(threeDayForecast.data, '<---- THREE DAY FORECAST LOG ---<<<');
+
+      this.setState({
+        forecast: threeDayForecast.data,
+      });
+
+      console.log(this.state.forecast, '<---- THIS DOT STATE FORECAST LOG ---<<<');
+
+    } catch(error) {
+      console.log(error, '<---- ERROR LOG ---<<<');
+    }
+    // console.log(this.state.forecast, '<---- THIS DOT STATE FORECAST LOG ---<<<');
   }
 
-  render() {
 
+  changeHandler = (event) => this.setState({ searchQuery: event.target.value });
+
+  render() {
+    console.log(this.state, '<---- THIS DOT STATE RENDER LOG ---<<<');
     return (
       <>
-        <input onChange={(event) => this.setState({ searchQuery: event.target.value })} placeholder="search for a city"></input>
+        <input onChange={this.changeHandler} placeholder="search for a city"></input>
         <Button onClick={this.getLocation} variant="warning">Explore!</Button>
 
         {/* falsy: false, 0, 0.0, null, undefined, NaN, '' */}
@@ -65,13 +85,8 @@ class App extends React.Component {
           <li>Longitude: {this.state.longitude}</li>
           </ul>
           <h3>Map:</h3>
-          <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded />
-          <h3>Three Day Weather Forcast for {this.state.location.display_name}</h3>
-          <ul>
-          <li>{this.state.forcastDate[0]}: {this.state.forcastDescr[0]}</li>
-          <li>{this.state.forcastDate[1]}: {this.state.forcastDescr[1]}</li>
-          <li>{this.state.forcastDate[2]}: {this.state.forcastDescr[2]}</li>
-          </ul>
+          <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded fluid />
+          <Weather forecast={this.state.forecast} name={this.state.searchQuery} error={this.state.error} />
           </>
         }
 
@@ -86,5 +101,6 @@ class App extends React.Component {
     )
   }
 }
+
 
 export default App;
