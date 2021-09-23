@@ -22,7 +22,7 @@
   1. Set up react repo and api keys
   2. Rendered locations, lat, long
   3. Rendered map
-  4. Created error message 
+  4. Created error message
 - Estimate of time needed to complete: 3 hours
 - Start time: 12:30pm
 - Finish time: 5:30pm
