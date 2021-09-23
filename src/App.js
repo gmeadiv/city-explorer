@@ -51,13 +51,13 @@ class App extends React.Component {
       const API = 'http://localhost:3001';
       const forecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
-      console.log(forecast, '<---- THREE DAY FORECAST LOG ---<<<')
+      // console.log(forecast, '<---- THREE DAY FORECAST LOG ---<<<')
 
       this.setState({
         forecast,
       });
 
-      console.log(this.state.forecast, '<---- SET STATE FORECAST LOG ---<<<')
+      // console.log(this.state.forecast, '<---- SET STATE FORECAST LOG ---<<<')
 
     } catch(error) {
       console.log(error, '<---- ERROR LOG ---<<<');
