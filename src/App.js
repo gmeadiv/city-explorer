@@ -16,6 +16,7 @@ class App extends React.Component {
       latitude: '',
       longitude: '',
       forecast: [],
+      movies: [],
       error: false,
     }
   }
@@ -62,6 +63,17 @@ class App extends React.Component {
     } catch(error) {
       console.log(error, '<---- ERROR LOG ---<<<');
     }
+  }
+
+  getMovies = async () => {
+    // ask for movies
+    // setState of movies to reflect respnse
+    // display movies
+    const url = 'http://localhost:3001';
+    const movies = await axios.get(`${url}/forecast`, {params: {searchQuery: this.state.searchQuery}});
+    
+    this.setState({movies});
+
   }
 
   changeHandler = (event) => {
