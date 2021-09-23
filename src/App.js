@@ -15,7 +15,7 @@ class App extends React.Component {
       location: '',
       latitude: '',
       longitude: '',
-      forecast: [],
+      forecast: null,
       error: false,
     }
   }
@@ -77,7 +77,7 @@ class App extends React.Component {
 
         {/* falsy: false, 0, 0.0, null, undefined, NaN, '' */}
 
-        {this.state.location &&
+        {this.state.forecast &&
           <>
           <ul>
           <li>City Name: {this.state.location.display_name}</li>
