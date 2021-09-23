@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 
 class Weather extends React.Component {
   render() {
-    // console.log(this.props.forecast.data[0].date, '<---- THIS WEATHER PROPS LOG ---<<<')
+    console.log(this.props, '<---- THIS WEATHER PROPS LOG ---<<<')
     return(
       <Container>
           <h3>Three Day Forecast for {this.props.name}</h3>
