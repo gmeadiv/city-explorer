@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import axios from 'axios';
 
-import Weather from './Weather.js';
-import Movies from './Movies.js';
+import Weather from './components/Weather.js';
+import Movies from './components/Movies.js';
 
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
@@ -31,10 +31,8 @@ class App extends React.Component {
       const latitude = response.data[0].lat;
       const longitude = response.data[0].lon;
 
-      // console.log(response.data[0], '<---- RESPONSE DOT DATA LOG ---<<<');
-
       this.setState({
-        location, // or location:location
+        location,
         latitude,
         longitude,
         error: false,
@@ -52,20 +50,15 @@ class App extends React.Component {
   };
 
   getThreeDayForecast = async (latitude, longitude) => {
-    // console.log(latitude, longitude, '<---- THIS DOT COORDINATES LOG ---<<<');
     try {
       const forecastURL = process.env.REACT_APP_API_URL;
       const forecast = await axios.get(`${forecastURL}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
-
-      // console.log(forecast.data.data[0].city_name, '<---- BEFORE SET STATE FORECAST LOG ---<<<')
 
       this.setState({
         forecast: forecast.data.data[0],
       });
 
       this.getMovies();
-
-      // console.log(this.state.forecast.city_name, '<---- AFTER SET STATE FORECAST LOG ---<<<')
 
     } catch(error) {
       console.log(error, '<---- GET FORECAST ERROR LOG ---<<<');
@@ -77,13 +70,9 @@ class App extends React.Component {
       const moviesURL = process.env.REACT_APP_API_URL;
       const movies = await axios.get(`${moviesURL}/movies`, {params: {searchQuery: this.state.forecast.city_name,}});
 
-      // console.log(movies.data, '<---- GET MOVIES SUCCESS LOG ---<<<');
-
       this.setState({
         movieArray: movies.data,
       });
-
-      // console.log(movies.data, '<---- AFTER SET STATE LOG ---<<<');
 
     } catch(error) {
       console.log(error, '<---- GET MOVIES ERROR LOG ---<<<');
@@ -95,7 +84,6 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(this.state, '<---- THIS DOT STATE RENDER LOG ---<<<');
     return (
       <>
         <input onChange={this.changeHandler} placeholder="search for a city"></input>
@@ -112,7 +100,7 @@ class App extends React.Component {
           </ul>
           <h3>Map:</h3>
           <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded fluid />
-          <Weather forecast={this.state.forecast} name={this.state.searchQuery} error={this.state.error} />
+          <Weather forecast={this.state.forecast} name={this.state.searchQuery} />
           <Movies movies={this.state.movieArray} />
           </>
         }
