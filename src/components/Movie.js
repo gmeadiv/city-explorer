@@ -9,7 +9,6 @@ class Movie extends React.Component {
     console.log(movies, '<---- SECOND MOVIE ARRAY LOG')
     return (
       <Container>
-        <h3>MOVIE PLACEHOLDER</h3>
         <Row xs={1} sm={2} md={3} lg={4}>
           {movies.map((movie, index) => (
           <Col key={index}>
