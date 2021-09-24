@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-import Weather from './weather.js';
+import Weather from './Weather.js';
+import Movies from './Movies.js';
 
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
@@ -36,6 +37,8 @@ class App extends React.Component {
         error: false,
       });
 
+      this.getThreeDayForecast(latitude, longitude);
+
       } catch (error) {
 
       console.error('Unable to find city', 
@@ -43,21 +46,21 @@ class App extends React.Component {
 
       this.setState({ error: true });
     }
-    this.getThreeDayForecast(this.latitude, this.longitude);
   };
 
   getThreeDayForecast = async (latitude, longitude) => {
+    console.log(latitude, longitude, '<---- THIS DOT COORDINATES LOG ---<<<');
     try {
       const API = 'http://localhost:3001';
       const forecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
-      // console.log(forecast, '<---- THREE DAY FORECAST LOG ---<<<')
+      // console.log(forecast.data.data[0], '<---- BEFORE SET STATE FORECAST LOG ---<<<')
 
       this.setState({
-        forecast,
+        forecast: forecast.data.data[0],
       });
 
-      // console.log(this.state.forecast, '<---- SET STATE FORECAST LOG ---<<<')
+      // console.log(this.state.forecast, '<---- AFTER SET STATE FORECAST LOG ---<<<')
 
     } catch(error) {
       console.log(error, '<---- ERROR LOG ---<<<');
@@ -87,6 +90,7 @@ class App extends React.Component {
           <h3>Map:</h3>
           <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded fluid />
           <Weather forecast={this.state.forecast} name={this.state.searchQuery} error={this.state.error} />
+          <Movies  />
           </>
         }
 
