@@ -54,7 +54,7 @@ class App extends React.Component {
   getThreeDayForecast = async (latitude, longitude) => {
     // console.log(latitude, longitude, '<---- THIS DOT COORDINATES LOG ---<<<');
     try {
-      const forecastURL = 'http://localhost:3001';
+      const forecastURL = process.env.REACT_APP_API_URL;
       const forecast = await axios.get(`${forecastURL}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
       // console.log(forecast.data.data[0].city_name, '<---- BEFORE SET STATE FORECAST LOG ---<<<')
@@ -74,7 +74,7 @@ class App extends React.Component {
 
   getMovies = async () => {
     try {
-      const moviesURL = 'http://localhost:3001';
+      const moviesURL = process.env.REACT_APP_API_URL;
       const movies = await axios.get(`${moviesURL}/movies`, {params: {searchQuery: this.state.forecast.city_name,}});
 
       // console.log(movies.data, '<---- GET MOVIES SUCCESS LOG ---<<<');
@@ -83,7 +83,7 @@ class App extends React.Component {
         movieArray: movies.data,
       });
 
-      console.log(movies.data, '<---- AFTER SET STATE LOG ---<<<');
+      // console.log(movies.data, '<---- AFTER SET STATE LOG ---<<<');
 
     } catch(error) {
       console.log(error, '<---- GET MOVIES ERROR LOG ---<<<');
