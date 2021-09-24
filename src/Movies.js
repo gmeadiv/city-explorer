@@ -6,23 +6,21 @@ import Row from 'react-bootstrap/Row';
 class Movie extends React.Component {
   render() {
     const movies = this.props.movies;
-    console.log(movies[0].poster_path, '<---- THIS MOVIES PROPS LOG ---<<<');
+    // console.log(movies, '<---- THIS MOVIES PROPS LOG ---<<<');
     return (
       <Container>
-        <h4>MOVIES PLACEHOLDER</h4>
+        <h3>MOVIES PLACEHOLDER</h3>
         <Row xs={1} sm={2} md={3} lg={4}>
           {movies.map((movie, index) => (
-            <Col key={index}>
-            <ul> 
-              <li>{movie.original_title}</li>
-              <li>{movie.overview}</li>
-            </ul>
-            {/* <img src={movie.poster_path} alt="this movie's poster" rounded fluid/> */}
+            <Col key={index}> 
+              <h4>{movie.original_title}</h4>
+              <p>{movie.overview}</p>
+            <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="this movie's poster" rounded="true" fluid="true" />
             <ul>
-              <li>{movie.vote_average}</li> 
-              <li>{movie.vote_count}</li>
-              <li>{movie.popularity}</li>
-              <li>{movie.release_date}</li> 
+              <li>Average Vote: {movie.vote_average}</li> 
+              <li>Total Votes: {movie.vote_count}</li>
+              <li>Popularity Score: {movie.popularity}</li>
+              <li>Release Date: {movie.release_date}</li> 
             </ul>
           </Col>))}
         </Row>
