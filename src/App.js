@@ -63,9 +63,23 @@ class App extends React.Component {
       // console.log(this.state.forecast, '<---- AFTER SET STATE FORECAST LOG ---<<<')
 
     } catch(error) {
-      console.log(error, '<---- ERROR LOG ---<<<');
+      console.log(error, '<---- GET FORECAST ERROR LOG ---<<<');
     }
   }
+
+  getMovies = async () => {
+    try {
+      const API = 'http://localhost:3001';
+      const movies = await axios.get(`${API}/movies`);
+      console.log(movies, '<---- GET MOVIES SUCCESS LOG ---<<<');
+    } catch(error) {
+      console.log(error, '<---- GET MOVIES ERROR LOG ---<<<');
+    }
+  }
+    // console.log( '<---- THIS DOT COORDINATES LOG ---<<<');
+    // try {
+    //   const API = 'http://localhost:3001';
+    //   const movies = await axios.get(`${API}/movies`, {params: {searchQuery: this.state.searchQuery}});}
 
   changeHandler = (event) => {
    this.setState({searchQuery: event.target.value});

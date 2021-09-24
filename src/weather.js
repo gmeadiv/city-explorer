@@ -9,8 +9,8 @@ class Weather extends React.Component {
       <Container>
           <h3>Weather Forecast for {this.props.forecast.city_name}:</h3>
           <ul>
-            <li id="forecast_date">{this.props.forecast.datetime} </li>
-            <li id="forecast_description">{this.props.forecast.weather.description}</li>
+          <li id="forecast_date">{this.props.forecast.datetime} </li>
+          <li id="forecast_description">{this.props.forecast.weather.description}</li>
           </ul>
       </Container>
     )
