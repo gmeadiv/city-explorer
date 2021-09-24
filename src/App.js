@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import axios from 'axios';
 
@@ -17,7 +18,7 @@ class App extends React.Component {
       latitude: '',
       longitude: '',
       forecast: null,
-      error: false,
+      movieArray: null,
     }
   }
 
@@ -29,6 +30,8 @@ class App extends React.Component {
       const location = response.data[0].display_name;
       const latitude = response.data[0].lat;
       const longitude = response.data[0].lon;
+
+      // console.log(response.data[0], '<---- RESPONSE DOT DATA LOG ---<<<');
 
       this.setState({
         location, // or location:location
@@ -49,18 +52,20 @@ class App extends React.Component {
   };
 
   getThreeDayForecast = async (latitude, longitude) => {
-    console.log(latitude, longitude, '<---- THIS DOT COORDINATES LOG ---<<<');
+    // console.log(latitude, longitude, '<---- THIS DOT COORDINATES LOG ---<<<');
     try {
-      const API = 'http://localhost:3001';
-      const forecast = await axios.get(`${API}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
+      const forecastURL = 'http://localhost:3001';
+      const forecast = await axios.get(`${forecastURL}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
-      // console.log(forecast.data.data[0], '<---- BEFORE SET STATE FORECAST LOG ---<<<')
+      // console.log(forecast.data.data[0].city_name, '<---- BEFORE SET STATE FORECAST LOG ---<<<')
 
       this.setState({
         forecast: forecast.data.data[0],
       });
 
-      // console.log(this.state.forecast, '<---- AFTER SET STATE FORECAST LOG ---<<<')
+      this.getMovies();
+
+      // console.log(this.state.forecast.city_name, '<---- AFTER SET STATE FORECAST LOG ---<<<')
 
     } catch(error) {
       console.log(error, '<---- GET FORECAST ERROR LOG ---<<<');
@@ -69,17 +74,21 @@ class App extends React.Component {
 
   getMovies = async () => {
     try {
-      const API = 'http://localhost:3001';
-      const movies = await axios.get(`${API}/movies`);
-      console.log(movies, '<---- GET MOVIES SUCCESS LOG ---<<<');
+      const moviesURL = 'http://localhost:3001';
+      const movies = await axios.get(`${moviesURL}/movies`, {params: {searchQuery: this.state.forecast.city_name,}});
+
+      // console.log(movies.data, '<---- GET MOVIES SUCCESS LOG ---<<<');
+
+      this.setState({
+        movieArray: movies.data,
+      });
+
+      console.log(movies.data, '<---- AFTER SET STATE LOG ---<<<');
+
     } catch(error) {
       console.log(error, '<---- GET MOVIES ERROR LOG ---<<<');
     }
   }
-    // console.log( '<---- THIS DOT COORDINATES LOG ---<<<');
-    // try {
-    //   const API = 'http://localhost:3001';
-    //   const movies = await axios.get(`${API}/movies`, {params: {searchQuery: this.state.searchQuery}});}
 
   changeHandler = (event) => {
    this.setState({searchQuery: event.target.value});
@@ -94,7 +103,7 @@ class App extends React.Component {
 
         {/* falsy: false, 0, 0.0, null, undefined, NaN, '' */}
 
-        {this.state.forecast &&
+        {this.state.movieArray &&
           <>
           <ul>
           <li>City Name: {this.state.location.display_name}</li>
@@ -104,7 +113,7 @@ class App extends React.Component {
           <h3>Map:</h3>
           <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded fluid />
           <Weather forecast={this.state.forecast} name={this.state.searchQuery} error={this.state.error} />
-          <Movies  />
+          <Movies movies={this.state.movieArray} />
           </>
         }
 
