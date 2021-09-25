@@ -85,7 +85,6 @@ class App extends React.Component {
   getMovies = async () => {
     try {
       const moviesURL = process.env.REACT_APP_API_URL;
-      console.log(moviesURL, '<---- GET MOVIES URL LOG ---<<<');
 
       const movies = await axios.get(`${moviesURL}/movies`, {params: {searchQuery: this.state.forecast.city_name,}});
 

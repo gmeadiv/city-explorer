@@ -12,8 +12,8 @@ class Movie extends React.Component {
           {movies.map((movie, index) => (
           <Col key={index}>
             <h4>{movie.title}</h4>
-            <p>{movie.overview}</p>
             <img src={movie.image} alt="this movie's poster" rounded="true" fluid="true" />
+            <p>{movie.overview}</p>
             <ul>
              <li>Average Vote: {movie.avgVote}</li>
              <li>Total Votes: {movie.totalVotes} </li>
