@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 class Movie extends React.Component {
   render() {
     const movies = this.props.movies;
-    console.log(movies, '<---- SECOND MOVIE ARRAY LOG')
+    // console.log(movies, '<---- SECOND MOVIE ARRAY LOG')
     return (
       <Container>
         <Row xs={1} sm={2} md={3} lg={4}>
