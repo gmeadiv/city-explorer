@@ -8,15 +8,15 @@
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
-### ![Lab 6 WRRC](./lab6_wrrc.png)
+- ![Lab 6 WRRC](./lab6_wrrc.png)
 
-### ![Lab 7 WRRC](./lab7_wrrc.png)
+- ![Lab 7 WRRC](./lab7_wrrc.png)
 
-### ![Lab 8 WRRC](./lab7_wrrc.png)
+- ![Lab 8 WRRC](./lab7_wrrc.png)
 
-### ![Lab 9 WRRC](./lastWRRC.png)
+- ![Lab 9 WRRC](./lastWRRC.png)
 
-### ![Lab 10 WRRC](./lastWRRC.png)
+- ![Lab 10 WRRC](./lastWRRC.png)
 
 ## Architecture
 <!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
