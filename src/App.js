@@ -18,7 +18,6 @@ class App extends React.Component {
       latitude: '',
       longitude: '',
       forecast: null,
-      yelps: null,
       movieArray: null,
     }
   }
@@ -40,7 +39,6 @@ class App extends React.Component {
       });
 
       this.getThreeDayForecast(latitude, longitude);
-      this.getYelp(latitude, longitude);
 
       } catch (error) {
 
@@ -64,21 +62,6 @@ class App extends React.Component {
 
     } catch(error) {
       console.log(error, '<---- GET FORECAST ERROR LOG ---<<<');
-    }
-  }
-
-  getYelp = async (latitude, longitude) => {
-    
-    try {
-      const yelpURL = process.env.REACT_APP_API_URL;
-      const yelps = await axios.get(`${yelpURL}/yelp`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
-
-      this.setState({
-        yelps,
-      });
-
-    } catch(error) {
-      console.log(error, '<---- GET YELP ERROR LOG ---<<<');
     }
   }
 
