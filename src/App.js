@@ -25,6 +25,8 @@ class App extends React.Component {
   getLocation = async () => {
     const locationURL = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${this.state.searchQuery}&format=json`;
 
+    console.log(locationURL, '<---- LOCATION URL ---<<<')
+
     try {
       const response = await axios.get(locationURL);
       const location = response.data[0].display_name;
@@ -55,7 +57,7 @@ class App extends React.Component {
       const forecast = await axios.get(`${forecastURL}/forecast`, {params: {searchQuery: this.state.searchQuery, latitude: latitude, longitude: longitude}});
 
       this.setState({
-        forecast: forecast.data.data[0],
+        forecast: forecast.data,
       });
 
       this.getMovies();
@@ -66,10 +68,11 @@ class App extends React.Component {
   }
 
   getMovies = async () => {
+    console.log(this.state.searchQuery, '<---- MOVIES DOT STATE')
     try {
       const moviesURL = process.env.REACT_APP_API_URL;
 
-      const movies = await axios.get(`${moviesURL}/movies`, {params: {searchQuery: this.state.forecast.city_name,}});
+      const movies = await axios.get(`${moviesURL}/movies`, {params: {searchQuery: this.state.searchQuery,}});
 
       this.setState({
         movieArray: movies.data,
@@ -100,7 +103,7 @@ class App extends React.Component {
           <li>Longitude: {this.state.longitude}</li>
           </ul>
           <h3>Map:</h3>
-          <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.429fe5d05e82b46d41d445914dfbab1b&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded fluid />
+          <Image src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.latitude},${this.state.longitude}&zoom=12`} alt={this.state.location.display_name} rounded fluid />
           <Weather forecast={this.state.forecast} name={this.state.searchQuery} />
           <Movies movies={this.state.movieArray} />
           </>
